@@ -126,7 +126,7 @@ if __name__ == "__main__":
     parser.add_argument('--n_mlp', type=int, default=8)
 
     # Arguments
-    parser.add_argument('--device', type=str, default='cuda')
+    parser.add_argument('--device', type=str, default='cpu')
     parser.add_argument('--seed', type=int, default=None)
     parser.add_argument('--tile_latent', action='store_true', help='Whether to forcibly tile the same latent N times')
     parser.add_argument('--opt_name', type=str, default='adam', help='Optimizer to use in projected gradient descent')
@@ -143,20 +143,26 @@ if __name__ == "__main__":
     parser.add_argument('--l2_lambda', type=float, default=1.0, help='L2 loss multiplier factor')
     parser.add_argument('--p_norm_lambda', type=float, default=0.001, help='P-norm Regularizer multiplier factor')
     parser.add_argument('--l_F_lambda', type=float, default=0.1, help='L_F loss multiplier factor')
-    parser.add_argument('--W_steps', type=int, default=1100, help='Number of W space optimization steps')
-    parser.add_argument('--FS_steps', type=int, default=250, help='Number of W space optimization steps')
+    # parser.add_argument('--W_steps', type=int, default=1100, help='Number of W space optimization steps')
+    # parser.add_argument('--FS_steps', type=int, default=250, help='Number of W space optimization steps')
+    parser.add_argument('--W_steps', type=int, default=100, help='Number of W space optimization steps')
+    parser.add_argument('--FS_steps', type=int, default=50, help='Number of W space optimization steps')
 
     # Alignment loss options
     parser.add_argument('--ce_lambda', type=float, default=1.0, help='cross entropy loss multiplier factor')
     parser.add_argument('--style_lambda', type=str, default=4e4, help='style loss multiplier factor')
-    parser.add_argument('--align_steps1', type=int, default=400, help='')
-    parser.add_argument('--align_steps2', type=int, default=100, help='')
-    parser.add_argument('--warp_steps', type=int, default=100, help='')
+    # parser.add_argument('--align_steps1', type=int, default=400, help='')
+    # parser.add_argument('--align_steps2', type=int, default=100, help='')
+    # parser.add_argument('--warp_steps', type=int, default=100, help='')
+    parser.add_argument('--align_steps1', type=int, default=80, help='')
+    parser.add_argument('--align_steps2', type=int, default=20, help='')
+    parser.add_argument('--warp_steps', type=int, default=20, help='')
 
     # Blend loss options
     parser.add_argument('--face_lambda', type=float, default=1.0, help='')
     parser.add_argument('--hair_lambda', type=str, default=1.0, help='')
-    parser.add_argument('--blend_steps', type=int, default=400, help='')
+    # parser.add_argument('--blend_steps', type=int, default=400, help='')
+    parser.add_argument('--blend_steps', type=int, default=80, help='')
 
     args = parser.parse_args()
     main(args)
