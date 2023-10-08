@@ -425,15 +425,16 @@ class Alignment(nn.Module):
                 #     save_im.save(cur_check_dir + f'{im_name_1}_with_{im_name_2}_hair_{step}.png')
 
             latent_in = latent_mixed
+            save_im = toPIL(I_G_0_1.squeeze().cpu())
             if self.opts.save_all:
                 gram_add = ''
                 if self.opts.blend_with_gram:
                     gram_add = '_gram'
 
-                save_im = toPIL(I_G_0_1.squeeze().cpu())
+                # save_im = toPIL(I_G_0_1.squeeze().cpu())
                 if self.opts.save_all:
                     save_im.save(os.path.join(self.opts.save_dir, f'4_blend_and_alignment_img.png'))
-            save_im.save(os.path.join(self.opts.output_dir, f'{im_name_1}_{im_name_2}.png'))
+            save_im.save(os.path.join(self.opts.output_dir, f'{im_name_1}_{im_name_2}{self.opts.img_type}'))
         else:
             pass
 
@@ -514,7 +515,7 @@ class Alignment(nn.Module):
         _, gen_im = self.create_down_seg(latent_in, is_downsampled=is_downsampled)
         save_im = toPIL(((gen_im + 1) / 2).clamp(0, 1).squeeze().cpu())
         if self.opts.save_all:
-            save_im.save(os.path.join(self.opts.save_dir, '4_Aligned_src_img.png'))
+            save_im.save(os.path.join(self.opts.save_dir, f'4_Aligned_src_img{self.opts.img_type}'))
 
         return latent_align_1
 
@@ -530,7 +531,7 @@ class Alignment(nn.Module):
             image_path = os.path.join(save_dir, '{}_{}_{}.png'.format(im_name_1, im_name_2, save_name))
             save_im.save(image_path)
         if self.opts.save_all:
-            save_im.save(os.path.join(self.opts.save_dir, '5_latent_F_mixed_output.png'))
+            save_im.save(os.path.join(self.opts.save_dir, f'5_latent_F_mixed_output{self.opts.img_type}'))
         np.savez(latent_path, latent_in=latent_in.detach().cpu().numpy(), latent_F=latent_F.detach().cpu().numpy())
 
     def warp_target(self, img_path2, src_kp_hm, src_ypr, img_path1):
@@ -579,7 +580,7 @@ class Alignment(nn.Module):
             _, gen_im = self.create_down_seg(latent_in, is_downsampled=is_downsampled)
         if cur_check_dir is not None:
             save_im = toPIL(((gen_im + 1) / 2).clamp(0, 1).squeeze().cpu())
-            save_im.save(cur_check_dir + f'{im_name_2}_with_{im_name_1}_pose.png')
+            save_im.save(cur_check_dir + f'{im_name_2}_with_{im_name_1}_pose{self.opts.img_type}')
         return gen_im
 
     def _loss_lpips(self, gen_im, ref_im, **kwargs): # added 220208
@@ -803,7 +804,7 @@ class Alignment(nn.Module):
 
         if self.opts.save_all:
             save_im = toPIL(gen_im.squeeze().cpu())
-            save_im.save(os.path.join(self.opts.save_dir, '1_warped_img.png'))
+            save_im.save(os.path.join(self.opts.save_dir, f'1_warped_img{self.opts.img_type}'))
         if 'F' in mode:
             return latent_F_optimized, latent_W_optimized
         if self.opts.warped_seg:
