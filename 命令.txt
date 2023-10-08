@@ -1,0 +1,4 @@
+python main.py --input_dir ./ffhq_image/ --im_path1 00016.png --im_path2 00587.png --output_dir ./style_your_hair_output/ --warp_loss_with_prev_list delta_w style_hair_slic_large --save_all --version final --flip_check
+
+
+python main.py --input_dir ./ffhq_image/ --im_path1 00016.png --im_path2 00587.png --output_dir ./output2/ --warp_loss_with_prev_list delta_w style_hair_slic_large --version final --W_steps 80 --FS_steps 50 --align_steps1 50 --align_steps2 20 --warp_steps 20 --blend_steps 50
